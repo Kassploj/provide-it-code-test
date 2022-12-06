@@ -7,20 +7,22 @@ export const storeRouter = express.Router()
 const pageSize = 8
 
 storeRouter.get('/products', async (req, res) => {
-    const page = req.query.page ? req.query.page : 0;
+    const { page = 0, min, max, category } = req.query;
     const products = new ProductList(await api.getProductList());
     const startIndex = page ? page * pageSize : 0;
     const stopIndex = startIndex + pageSize;
+    products.filter(min, max, category)
     products.paginate(startIndex, stopIndex)
 
     res.send(products.getListing())
 })
 
 storeRouter.get('/products/detailed', async (req, res) => {
-    const page = req.query.page ? req.query.page : 0;
+    const { page = 0, min, max, category } = req.query;
     const products = new ProductList(await api.getProductList());
     const startIndex = page ? page * pageSize : 0;
     const stopIndex = startIndex + pageSize;
+    products.filter(min, max, category)
     products.paginate(startIndex, stopIndex)
 
     res.send(products.getListingWithDescription())

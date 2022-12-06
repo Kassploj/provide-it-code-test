@@ -42,7 +42,6 @@ export class ProductList {
     getListing() {
         const listing = []
         for (const product of this.products) {
-            console.log(product)
             listing.push(product.getProduct());
         }
         return listing;
@@ -51,21 +50,33 @@ export class ProductList {
     getListingWithDescription() {
         const listing = []
         for (const product of this.products) {
-            console.log(product)
             listing.push(product.getProductWithDescription());
         }
-        return listing;        
+        return listing;
     }
 
-    // filterByPrice() {
+    filterByPrice(min, max) {
+        this.products = this.products.filter(product => product.price >= min && product.price <= max)
+    }
 
-    // }
+    filterByCategory(category) {
+        this.products = this.products.filter(product => product.category === category)
+    }
 
-    // filterByCategory() {
-
-    // }
+    filter(min, max, category) {
+        if (category) {
+            this.filterByCategory(category)
+        }
+        if (min && max) {
+            this.filterByPrice(min, max)
+        }
+    }
 
     paginate(startIndex, stopIndex) {
-        this.products = this.products.slice(startIndex, stopIndex);
+        if (this.products.length > 8) {
+            this.products = this.products.slice(startIndex, stopIndex);
+        } else { 
+            return;
+        }
     }
 }
