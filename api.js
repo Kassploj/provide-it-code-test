@@ -1,4 +1,5 @@
 import got from "got";
+import { ProductList } from "./product.js";
 
 const STORE_API_DOMAIN = "https://fakestoreapi.com"
 
@@ -13,7 +14,7 @@ export async function getProduct(productId) {
 export async function getProductList() {
     const products = await got.get(`${STORE_API_DOMAIN}/products`)
         .then(data => {
-            return JSON.parse(data.body)
+            return data.body;
         });
     return products;
 }
