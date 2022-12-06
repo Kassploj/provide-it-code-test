@@ -4,6 +4,7 @@ import got from "got";
 
 const app = express();
 const dbClient = new MongoClient("mongodb://127.0.0.1:27017")
+const STORE_API_DOMAIN = "https://fakestoreapi.com"
 
 app.get('/products', async (req, res) => {
     const products = await getProductList()
@@ -13,7 +14,6 @@ app.get('/products', async (req, res) => {
 app.get('/products/:productId', async (req, res) => {
     const productId = req.params.productId;
     let product = await getProductFromDB(productId);
-    console.log(product)
     if (!product) {
         product = await getProduct(productId)
         insertToDB(product)
@@ -29,7 +29,7 @@ app.get('/db/:productId', async (req, res) => {
 app.listen(3000)
 
 async function getProduct(productId) {
-    const products = await got.get(`https://fakestoreapi.com/products/${productId}`)
+    const products = await got.get(`${STORE_API_DOMAIN}/products/${productId}`)
         .then(data => {
             return data.body
         });
@@ -47,7 +47,7 @@ async function getProductFromDB(productId) {
     return product
 }
 async function getProductList() {
-    const products = await got.get("https://fakestoreapi.com/products")
+    const products = await got.get(`${STORE_API_DOMAIN}/products`)
         .then(data => {
             return data.body
         });
@@ -62,7 +62,5 @@ async function insertToDB(item) {
 }
 
 function getMongoDBCollection() {
-    const collection = dbClient.db("new").collection("coll");
-
-    return collection;
+    return dbClient.db("new").collection("coll");
 }
