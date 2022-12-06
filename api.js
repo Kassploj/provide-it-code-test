@@ -13,7 +13,7 @@ export async function getProduct(productId) {
 export async function getProductList() {
     const products = await got.get(`${STORE_API_DOMAIN}/products`)
         .then(data => {
-            return data.body
+            return JSON.parse(data.body)
         });
     return products;
 }
