@@ -39,24 +39,22 @@ export class ProductList {
         }
     }
 
-    // *getListing() {
-    //     for (const product of this.products) {
-    //         yield product.getProduct();
-    //     }
-    // }
     getListing() {
-        const arr = []
+        const listing = []
         for (const product of this.products) {
             console.log(product)
-            arr.push(product.getProduct());
+            listing.push(product.getProduct());
         }
-        return arr;
+        return listing;
     }
 
-    *getListingWithDescription() {
+    getListingWithDescription() {
+        const listing = []
         for (const product of this.products) {
-            yield product.getProductWithDescription();
+            console.log(product)
+            listing.push(product.getProductWithDescription());
         }
+        return listing;        
     }
 
     // filterByPrice() {
@@ -69,8 +67,5 @@ export class ProductList {
 
     paginate(startIndex, stopIndex) {
         this.products = this.products.slice(startIndex, stopIndex);
-        console.log("paged")
-        console.log(this.products)
-        // return this.products.slice(startIndex, stopIndex);
     }
 }
