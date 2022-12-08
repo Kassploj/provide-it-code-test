@@ -11,8 +11,9 @@ export async function getProduct(productId) {
     return products;
 }
 
-export async function getProductList() {
-    const products = await got.get(`${STORE_API_DOMAIN}/products`)
+export async function getProductList(category) {
+    const endpoint = category ? `products/category/${category}` : "products"
+    const products = await got.get(`${STORE_API_DOMAIN}/${endpoint}`)
         .then(data => {
             return data.body;
         });

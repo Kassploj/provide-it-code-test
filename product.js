@@ -63,10 +63,7 @@ export class ProductList {
         this.products = this.products.filter(product => product.category === category)
     }
 
-    filter(min, max, category) {
-        if (category) {
-            this.filterByCategory(category)
-        }
+    filter(min, max) {
         if (min && max) {
             this.filterByPrice(min, max)
         }

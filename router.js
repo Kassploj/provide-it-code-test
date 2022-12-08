@@ -8,10 +8,10 @@ const pageSize = 8
 
 storeRouter.get('/products', async (req, res) => {
     const { page = 0, min, max, category } = req.query;
-    const products = new ProductList(await api.getProductList());
+    const products = new ProductList(await api.getProductList(category));
     const startIndex = page ? page * pageSize : 0;
     const stopIndex = startIndex + pageSize;
-    products.filter(min, max, category)
+    products.filter(min, max)
     products.paginate(startIndex, stopIndex)
 
     res.send(products.getListing())
